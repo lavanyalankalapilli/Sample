@@ -44,7 +44,6 @@ public class ManagerService implements EmployeeService {
 
 	@Override
 	public Employee updateEmployee(Employee emp) {
-		System.out.println("in manager update");
 		int empId = emp.getId();
 		Employee employee = managers.stream().filter(e -> (e.getId() == empId)).findFirst().get();
 		employee.setDepartment(emp.getDepartment());

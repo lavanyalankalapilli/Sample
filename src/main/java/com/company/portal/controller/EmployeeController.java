@@ -6,12 +6,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.portal.model.Employee;
@@ -62,8 +64,8 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/employees/engineers/{id}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.CREATED)
 	public Employee updateEngineer(@RequestBody Employee e, @PathVariable int id) throws Exception {
-		System.out.println("controller engineer in update method");
 		Optional<Employee> emp = engService.getEmployeeById(id);
 		if (!emp.isPresent()) {
 			throw new Exception("Employee with ID " + id + " not found");
@@ -74,7 +76,6 @@ public class EmployeeController {
 
 	@RequestMapping(value = "/employees/managers/{id}", method = RequestMethod.PUT)
 	public Employee updateManager(@RequestBody Employee e, @PathVariable int id) throws Exception {
-		System.out.println(" contr mang in update method");
 		Optional<Employee> emp = manService.getEmployeeById(id);
 		if (!emp.isPresent()) {
 			throw new Exception("Employee with ID " + id + " not found");
@@ -85,7 +86,6 @@ public class EmployeeController {
 
 	@DeleteMapping("/employees/{id}")
 	public void delEmployee(@PathVariable int id) {
-		System.out.println("in delEmployee");
 		Optional<Employee> emp = engService.getEmployeeById(id);
 		if (emp.isPresent()) {
 			engService.deleteEmployeeById(id);
